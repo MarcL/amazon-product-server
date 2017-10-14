@@ -4,12 +4,14 @@
     "description": "",
     "main": "./server.js",
     "scripts": {
+        "server:expose": "lt -s amazonapi -p 3000",
         "start": "node .",
         "test": "echo \"Error: no test specified\" && exit 1",
         "watch": "nodemon --watch server.js --watch src"
     },
     "keywords": [],
-    "author": "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
+    "author":
+        "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
     "license": "MIT",
     "dependencies": {
         "apac": "^3.0.2",
@@ -19,6 +21,7 @@
     },
     "devDependencies": {
         "babel-preset-env": "^1.6.0",
+        "localtunnel": "^1.8.3",
         "nodemon": "^1.12.1"
     }
 }
