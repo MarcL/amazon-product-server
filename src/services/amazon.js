@@ -53,6 +53,16 @@ function itemSearch(locale = 'UK') {
 // pf_rd_t=101&
 // showBubbles=false
 
+// ageGroup
+// - adult-neutral
+// - adult-female
+// - adult-male
+// - teen-neutral
+// - kid8-neutral
+// - kid4-neutral
+// - baby-neutral
+// - pet-neutral
+
 function browseNodes() {
     const operationHelper = createOperationHelper();
 
