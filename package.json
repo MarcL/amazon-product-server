@@ -12,6 +12,7 @@
     "author": "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
     "license": "MIT",
     "dependencies": {
+        "apac": "^3.0.2",
         "babel-register": "^6.26.0",
         "dotenv": "^4.0.0",
         "express": "^4.16.2"
