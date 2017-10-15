@@ -1,5 +1,7 @@
 const getImageUrl = item => {
-    if (item.MediumImage) {
+    if (item.LargeImage) {
+        return item.LargeImage.URL;
+    } else if (item.MediumImage) {
         return item.MediumImage.URL;
     } else if (item.SmallImage.URL) {
         return item.MediumImage.URL;
