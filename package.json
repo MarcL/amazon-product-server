@@ -10,14 +10,14 @@
         "watch": "nodemon --watch server.js --watch src"
     },
     "keywords": [],
-    "author":
-        "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
+    "author": "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
     "license": "MIT",
     "dependencies": {
         "apac": "^3.0.2",
         "babel-register": "^6.26.0",
         "dotenv": "^4.0.0",
-        "express": "^4.16.2"
+        "express": "^4.16.2",
+        "morgan": "^1.9.0"
     },
     "devDependencies": {
         "babel-preset-env": "^1.6.0",

@@ -1,4 +1,7 @@
 import {OperationHelper} from 'apac';
+import {parseItem} from '../parsers/amazon';
+
+const AMAZON_MAX_ITEM_IDS = 10;
 
 const hasValidCredentials = () => {
     return (
@@ -32,9 +35,9 @@ function itemSearch(locale = 'UK') {
 
     return operationHelper
         .execute('ItemSearch', {
-            SearchIndex: 'Books',
-            Keywords: 'Harry Potter',
-            ResponseGroup: 'ItemAttributes,Offers'
+            SearchIndex: 'All',
+            Keywords: 'Christmas',
+            ResponseGroup: 'Offers,BrowseNodes'
         })
         .then(response => response.result)
         .catch(error => {
@@ -63,14 +66,15 @@ function itemSearch(locale = 'UK') {
 // - baby-neutral
 // - pet-neutral
 
-function browseNodes() {
+// Christmas browsenode (UK) 11180296031
+
+function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
     const operationHelper = createOperationHelper();
 
     return operationHelper
-        .execute('ItemSearch', {
-            SearchIndex: 'Books',
-            Keywords: 'Christmas',
-            ResponseGroup: 'BrowseNodes'
+        .execute('BrowseNodeLookup', {
+            BrowseNodeId: browseNodeId,
+            ResponseGroup: responseGroup
         })
         .then(response => response.result)
         .catch(error => {
@@ -78,4 +82,33 @@ function browseNodes() {
         });
 }
 
-export {browseNodes, itemSearch};
+function itemLookup(asin, responseGroup = 'Medium') {
+    const asinList = Array.isArray(asin) ? asin : [asin];
+
+    if (asinList.length > AMAZON_MAX_ITEM_IDS) {
+        throw new Error(
+            'Amazon:ItemLookUp : Exceeded maximum number of ItemIds'
+        );
+    }
+    const itemAsinList = asinList.join(',');
+
+    const operationHelper = createOperationHelper();
+
+    return operationHelper
+        .execute('ItemLookup', {
+            ItemId: itemAsinList,
+            ResponseGroup: responseGroup
+        })
+        .then(response => response.result)
+        .then(response => {
+            // Parse items from response
+            // TODO : Validate
+            const itemList = response.ItemLookupResponse.Items.Item;
+            return itemList.map(item => parseItem(item));
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+export {browseNodeLookup, itemLookup, itemSearch};
