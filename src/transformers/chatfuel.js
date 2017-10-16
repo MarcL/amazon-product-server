@@ -1,31 +1,40 @@
+const singleMessage = content => {
+    text: content;
+};
+
 const text = message => {
     const messageList = Array.isArray(message) ? message : [message];
-    const messages = messageList.map(text => {
-        return {text};
-    });
+    const messages = messageList.map(text => singleMessage(content));
 
     return {
         messages
     };
 };
 
-function image(url, text) {
+const imageAttachment = url => {
     return {
-        messages: [
-            {
-                attachment: {
-                    type: 'image',
-                    payload: {
-                        url
-                    }
-                }
-            },
-            {text}
-        ]
+        attachment: {
+            type: 'image',
+            payload: {
+                url
+            }
+        }
     };
-}
+};
 
-function galleryElement(item) {
+const image = url => {
+    return {
+        messages: [imageAttachment(url)]
+    };
+};
+
+const imageAndText = (url, content) => {
+    return {
+        messages: [imageAttachment(url), singleMessage(content)]
+    };
+};
+
+const galleryElement = item => {
     const {title, url, imageUrl} = item;
     return {
         title,
@@ -39,27 +48,23 @@ function galleryElement(item) {
             }
         ]
     };
-}
+};
 
-function gallery(simpleAmazonItemList) {
-    try {
-        const elements = simpleAmazonItemList.map(item => galleryElement(item));
-        return {
-            messages: [
-                {
-                    attachment: {
-                        type: 'template',
-                        payload: {
-                            template_type: 'generic',
-                            elements
-                        }
+const gallery = simpleAmazonItemList => {
+    const elements = simpleAmazonItemList.map(item => galleryElement(item));
+    return {
+        messages: [
+            {
+                attachment: {
+                    type: 'template',
+                    payload: {
+                        template_type: 'generic',
+                        elements
                     }
                 }
-            ]
-        };
-    } catch (error) {
-        return {};
-    }
-}
+            }
+        ]
+    };
+};
 
-export {text, gallery, image};
+export {text, gallery, image, imageAttachment, imageAndText};
