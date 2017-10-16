@@ -1,5 +1,4 @@
 import {OperationHelper} from 'apac';
-import {parseItem} from '../parsers/amazon';
 
 const AMAZON_MAX_ITEM_IDS = 10;
 
@@ -111,13 +110,6 @@ function itemLookup(asin, responseGroup = 'Medium') {
             ResponseGroup: responseGroup
         })
         .then(response => response.result)
-        .then(response => {
-            return response;
-            // // Parse items from response
-            // // TODO : Validate
-            // const itemList = response.ItemLookupResponse.Items.Item;
-            // return itemList.map(item => parseItem(item));
-        })
         .catch(error => {
             console.error(error);
         });

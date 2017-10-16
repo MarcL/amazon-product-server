@@ -1,10 +1,8 @@
 import express from 'express';
-import * as amazonApi from '../middleware/amazonApi';
+import * as botApi from '../middleware/botApi';
 
 const router = express.Router();
 
-router.get('/itemlookup/:asin', amazonApi.itemLookup);
-router.get('/itemsearch/:keywords', amazonApi.itemSearch);
-router.get('/browsenodelookup/:id', amazonApi.browseNodeLookup);
+router.get('/gifts/:id', botApi.getPresentList);
 
 export default router;

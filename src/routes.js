@@ -3,12 +3,13 @@ import * as amazonApi from './middleware/amazonApi';
 import notFoundHandler from './middleware/notFoundHandler';
 import defaultErrorHandler from './middleware/defaultErrorHandler';
 import amazonApiRoutes from './routes/amazonApi';
+import botRoutes from './routes/bot';
 
 function initialiseRoutes(app) {
     app.use(validateApiKey);
 
     app.use('/api/apa', amazonApiRoutes);
-    app.get('/api/bot/:id', amazonApi.amazonApi);
+    app.use('/api/bot', botRoutes);
 
     app.get('/', (request, response) => {
         response.json({});
