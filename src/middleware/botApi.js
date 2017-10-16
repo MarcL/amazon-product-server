@@ -1,6 +1,8 @@
 import * as api from '../services/amazon';
 import {gallery} from '../transformers/chatfuel';
 import {parseItem} from '../parsers/amazon';
+import {notFound} from '../botResponses';
+import logger from '../logger';
 
 const christmasItems = [
     {name: 'Christmas Films', browseNode: '14153804031'},
@@ -39,7 +41,8 @@ function getPresentList(request, response) {
             response.json(gallery(simpleAmazonItemList));
         })
         .catch(error => {
-            console.error(error);
+            logger.error('Error bot API', error);
+            response.json(notFound);
         });
 }
 

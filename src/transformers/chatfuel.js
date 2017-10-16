@@ -1,5 +1,5 @@
 const singleMessage = content => {
-    text: content;
+    return {text: content};
 };
 
 const text = message => {
