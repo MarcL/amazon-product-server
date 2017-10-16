@@ -26,20 +26,27 @@ const createOperationHelper = (locale = 'UK') => {
         awsId,
         awsSecret,
         assocId,
-        locale
+        locale,
+        maxRequestsPerSecond: 1
     });
 };
 
-function itemSearch(locale = 'UK') {
+function itemSearch(
+    keywords,
+    responseGroup = 'Offers,BrowseNodes',
+    locale = 'UK'
+) {
     const operationHelper = createOperationHelper(locale);
 
     return operationHelper
         .execute('ItemSearch', {
             SearchIndex: 'All',
-            Keywords: 'Christmas',
-            ResponseGroup: 'Offers,BrowseNodes'
+            Keywords: keywords,
+            ResponseGroup: responseGroup
         })
-        .then(response => response.result)
+        .then(response => {
+            return response.result;
+        })
         .catch(error => {
             console.error(error);
         });
@@ -68,6 +75,10 @@ function itemSearch(locale = 'UK') {
 
 // Christmas browsenode (UK) 11180296031
 
+const validateAmazonResponse = result => {
+    return result;
+};
+
 function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
     const operationHelper = createOperationHelper();
 
@@ -76,7 +87,7 @@ function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
             BrowseNodeId: browseNodeId,
             ResponseGroup: responseGroup
         })
-        .then(response => response.result)
+        .then(response => validateAmazonResponse(response.result))
         .catch(error => {
             console.error(error);
         });
@@ -101,10 +112,11 @@ function itemLookup(asin, responseGroup = 'Medium') {
         })
         .then(response => response.result)
         .then(response => {
-            // Parse items from response
-            // TODO : Validate
-            const itemList = response.ItemLookupResponse.Items.Item;
-            return itemList.map(item => parseItem(item));
+            return response;
+            // // Parse items from response
+            // // TODO : Validate
+            // const itemList = response.ItemLookupResponse.Items.Item;
+            // return itemList.map(item => parseItem(item));
         })
         .catch(error => {
             console.error(error);

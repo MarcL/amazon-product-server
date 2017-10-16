@@ -1,6 +1,4 @@
-const ELF_NO_GIF = 'https://media.giphy.com/media/MhVdjqeKACHmM/giphy.gif';
-
-const chatfuelText = message => {
+const text = message => {
     const messageList = Array.isArray(message) ? message : [message];
     const messages = messageList.map(text => {
         return {text};
@@ -11,7 +9,7 @@ const chatfuelText = message => {
     };
 };
 
-const chatfuelImage = (url, text) => {
+function image(url, text) {
     return {
         messages: [
             {
@@ -25,9 +23,9 @@ const chatfuelImage = (url, text) => {
             {text}
         ]
     };
-};
+}
 
-const chatfuelGalleryElement = item => {
+function galleryElement(item) {
     const {title, url, imageUrl} = item;
     return {
         title,
@@ -41,13 +39,11 @@ const chatfuelGalleryElement = item => {
             }
         ]
     };
-};
+}
 
-const chatfuelGallery = simpleAmazonItemList => {
+function gallery(simpleAmazonItemList) {
     try {
-        const elements = simpleAmazonItemList.map(item =>
-            chatfuelGalleryElement(item)
-        );
+        const elements = simpleAmazonItemList.map(item => galleryElement(item));
         return {
             messages: [
                 {
@@ -62,11 +58,8 @@ const chatfuelGallery = simpleAmazonItemList => {
             ]
         };
     } catch (error) {
-        return chatfuelImage(
-            ELF_NO_GIF,
-            "🎁 Oops! I'm having trouble finding that!"
-        );
+        return {};
     }
-};
+}
 
-export {chatfuelText, chatfuelGallery, chatfuelImage};
+export {text, gallery, image};

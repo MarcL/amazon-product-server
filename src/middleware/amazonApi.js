@@ -1,4 +1,4 @@
-import {browseNodeLookup, itemLookup, itemSearch} from '../services/amazon';
+import * as api from '../services/amazon';
 import {chatfuelGallery} from '../transformers/chatfuel';
 
 const christmasItems = [
@@ -15,27 +15,56 @@ const christmasItems = [
 const randomElement = array => array[Math.floor(Math.random() * array.length)];
 
 function amazonApi(request, response) {
-    const {ageGroup} = request.params;
+    const {id} = request.params;
 
-    browseNodeLookup(christmasItems[2].browseNode)
+    api
+        .browseNodeLookup(christmasItems[id].browseNode)
         .then(amazonResponse => {
-            // TODO : Validate this
-            const topItemList =
-                amazonResponse.BrowseNodeLookupResponse.BrowseNodes.BrowseNode
-                    .TopItemSet.TopItem;
+            response.json(amazonResponse);
+            // // TODO : Validate this
+            // const topItemList =
+            //     amazonResponse.BrowseNodeLookupResponse.BrowseNodes.BrowseNode
+            //         .TopItemSet.TopItem;
 
-            return topItemList.map(item => {
-                return item.ASIN;
-            });
+            // return topItemList.map(item => {
+            //     return item.ASIN;
+            // });
         })
-        .then(asinList => itemLookup(asinList))
-        .then(simpleAmazonItemList => {
-            const gallery = chatfuelGallery(simpleAmazonItemList);
-            response.json(gallery);
-        })
+        // .then(asinList => api.itemLookup(asinList))
+        // .then(simpleAmazonItemList => {
+        //     const gallery = chatfuelGallery(simpleAmazonItemList);
+        //     response.json(gallery);
+        // })
         .catch(error => {
             console.error(error);
         });
 }
 
-export default amazonApi;
+const itemSearch = (request, response) => {
+    const {keywords} = request.params;
+
+    api
+        .itemSearch(keywords)
+        .then(amazonResponse => response.json(amazonResponse))
+        .catch(error => console.error(error.message));
+};
+
+const browseNodeLookup = (request, response) => {
+    const {id} = request.params;
+
+    api
+        .browseNodeLookup(id)
+        .then(amazonResponse => response.json(amazonResponse))
+        .catch(error => console.error(error.message));
+};
+
+const itemLookup = (request, response) => {
+    const {asin} = request.params;
+
+    api
+        .itemLookup(asin)
+        .then(amazonResponse => response.json(amazonResponse))
+        .catch(error => console.error(error.message));
+};
+
+export {amazonApi, browseNodeLookup, itemLookup, itemSearch};

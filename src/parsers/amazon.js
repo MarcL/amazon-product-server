@@ -3,8 +3,8 @@ const getImageUrl = item => {
         return item.LargeImage.URL;
     } else if (item.MediumImage) {
         return item.MediumImage.URL;
-    } else if (item.SmallImage.URL) {
-        return item.MediumImage.URL;
+    } else if (item.SmallImage) {
+        return item.SmallImage.URL;
     }
 
     return 'http://http://lorempixel.com/500/500/';
