@@ -1,3 +1,5 @@
+import get from 'lodash.get';
+
 const getImageUrl = item => {
     if (item.LargeImage) {
         return item.LargeImage.URL;
@@ -11,12 +13,20 @@ const getImageUrl = item => {
 };
 
 const parseItem = item => {
+    const {ItemAttributes: itemAttributes} = item;
     return {
         asin: item.ASIN,
         url: item.DetailPageURL,
         imageUrl: getImageUrl(item),
-        title: item.ItemAttributes.Title
+        title: itemAttributes.Title,
+        price: itemAttributes.ListPrice.FormattedPrice,
+        features: itemAttributes.Feature
     };
 };
 
-export {parseItem};
+const itemsFromAmazonResponse = amazonResponse => {
+    const itemList = get(amazonResponse, 'ItemSearchResponse.Items.Item', []);
+    return itemList.map(item => parseItem(item));
+};
+
+export {itemsFromAmazonResponse, parseItem};

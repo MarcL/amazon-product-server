@@ -17,6 +17,7 @@
         "babel-register": "^6.26.0",
         "dotenv": "^4.0.0",
         "express": "^4.16.2",
+        "lodash.get": "^4.4.2",
         "morgan": "^1.9.0",
         "winston": "^2.4.0"
     },

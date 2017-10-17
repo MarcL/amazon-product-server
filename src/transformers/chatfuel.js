@@ -35,16 +35,16 @@ const imageAndText = (url, content) => {
 };
 
 const galleryElement = item => {
-    const {title, url, imageUrl} = item;
+    const {title, url, imageUrl, features, price} = item;
     return {
         title,
         image_url: imageUrl,
-        subtitle: title, // TODO: Add subtitle?
+        subtitle: price || features[0] || title,
         buttons: [
             {
                 type: 'web_url',
                 url,
-                title: 'View Present'
+                title: 'Buy Present'
             }
         ]
     };

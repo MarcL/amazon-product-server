@@ -30,11 +30,7 @@ const createOperationHelper = (locale = 'UK') => {
     });
 };
 
-function itemSearch(
-    keywords,
-    responseGroup = 'Offers,BrowseNodes',
-    locale = 'UK'
-) {
+function itemSearch(keywords, responseGroup = 'Medium', locale = 'UK') {
     const operationHelper = createOperationHelper(locale);
 
     return operationHelper
