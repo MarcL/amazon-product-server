@@ -1,0 +1,9 @@
+{
+    "name": "amazonapi",
+    "env": {
+        "AMAZON_KEY_ID": "@amazon-key-id",
+        "AMAZON_SECRET_KEY": "@amazon-secret-key",
+        "AMAZON_ASSOCIATE_ID": "djcr-21",
+        "API_KEY": "@amazon-product-server-api-key"
+    }
+}
