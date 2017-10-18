@@ -1,4 +1,6 @@
 import {OperationHelper} from 'apac';
+import cache from '../cache';
+import logger from '../logger';
 
 const AMAZON_MAX_ITEM_IDS = 10;
 
@@ -30,8 +32,25 @@ const createOperationHelper = (locale = 'UK') => {
     });
 };
 
+const createCacheKey = dataList => {
+    return dataList.join('|');
+};
+
 function itemSearch(keywords, responseGroup = 'Medium', locale = 'UK') {
     const operationHelper = createOperationHelper(locale);
+
+    const cacheKeyName = createCacheKey([
+        'ItemSearch',
+        keywords,
+        responseGroup,
+        locale
+    ]);
+
+    const cachedData = cache.get(cacheKeyName);
+    if (cachedData) {
+        logger.info(`Retrieving from cache : ${cacheKeyName}`);
+        return Promise.resolve(cachedData);
+    }
 
     return operationHelper
         .execute('ItemSearch', {
@@ -40,6 +59,8 @@ function itemSearch(keywords, responseGroup = 'Medium', locale = 'UK') {
             ResponseGroup: responseGroup
         })
         .then(response => {
+            logger.info(`Saving to cache : ${cacheKeyName}`);
+            cache.set(cacheKeyName, response.result);
             return response.result;
         })
         .catch(error => {
