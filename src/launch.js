@@ -1,11 +1,14 @@
 import express from 'express';
-import initialiseRoutes from './routes';
 import morgan from 'morgan';
+import compression from 'compression';
+import initialiseRoutes from './routes';
 
 function createServer() {
     const app = express();
 
     app.use(morgan('tiny'));
+    app.use(compression());
+
     initialiseRoutes(app);
 
     return app;

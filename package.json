@@ -15,6 +15,7 @@
     "dependencies": {
         "apac": "^3.0.2",
         "babel-register": "^6.26.0",
+        "compression": "^1.7.1",
         "dotenv": "^4.0.0",
         "express": "^4.16.2",
         "lodash.get": "^4.4.2",
