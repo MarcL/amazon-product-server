@@ -1,10 +1,10 @@
 import * as api from '../services/amazon';
 
 const itemSearch = (request, response, next) => {
-    const {keywords} = request.query;
+    const {keywords, index} = request.query;
 
     api
-        .itemSearch(keywords)
+        .itemSearch(keywords, index)
         .then(amazonResponse => {
             response.locals.apiResponse = amazonResponse;
             next();

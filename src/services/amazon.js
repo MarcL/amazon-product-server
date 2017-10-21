@@ -32,16 +32,76 @@ const createOperationHelper = (locale = 'UK') => {
     });
 };
 
+const validateSearchIndex = index => {
+    const validSearchIndexNames = [
+        'All',
+        'Apparel',
+        'Appliances',
+        'Automotive',
+        'Baby',
+        'Beauty',
+        'Blended',
+        'Books',
+        'Classical',
+        'DVD',
+        'Electronics',
+        'Grocery',
+        'HealthPersonalCare',
+        'HomeGarden',
+        'HomeImprovement',
+        'Jewelry',
+        'KindleStore',
+        'Kitchen',
+        'Lighting',
+        'Marketplace',
+        'MP3Downloads',
+        'Music',
+        'MusicTracks',
+        'MusicalInstruments',
+        'OfficeProducts',
+        'OutdoorLiving',
+        'Outlet',
+        'PetSupplies',
+        'PCHardware',
+        'Shoes',
+        'Software',
+        'SoftwareVideoGames',
+        'SportingGoods',
+        'Tools',
+        'Toys',
+        'VHS',
+        'Video',
+        'VideoGames',
+        'Watches'
+    ];
+
+    const validIndex = validSearchIndexNames.filter(
+        indexName => indexName.toLowerCase() === index.toLowerCase()
+    );
+
+    console.log(validIndex);
+
+    return validIndex.length ? validIndex : 'All';
+};
+
 const createCacheKey = dataList => {
     return dataList.join('|');
 };
 
-function itemSearch(keywords, responseGroup = 'Medium', locale = 'UK') {
+function itemSearch(
+    keywords,
+    index = 'All',
+    responseGroup = 'Medium',
+    locale = 'UK'
+) {
     const operationHelper = createOperationHelper(locale);
+
+    const searchIndex = validateSearchIndex(index);
 
     const cacheKeyName = createCacheKey([
         'ItemSearch',
         keywords,
+        searchIndex,
         responseGroup,
         locale
     ]);
@@ -54,7 +114,7 @@ function itemSearch(keywords, responseGroup = 'Medium', locale = 'UK') {
 
     return operationHelper
         .execute('ItemSearch', {
-            SearchIndex: 'All',
+            SearchIndex: searchIndex,
             Keywords: keywords,
             ResponseGroup: responseGroup
         })
