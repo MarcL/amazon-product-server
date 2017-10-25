@@ -126,12 +126,7 @@ function itemSearch(
         });
 }
 
-const similarityLookup = (
-    asin,
-    similarityType = 'Intersection',
-    responseGroup = 'Medium',
-    locale = 'UK'
-) => {
+const convertToCommaSeparatedList = asin => {
     const asinList = Array.isArray(asin) ? asin : [asin];
 
     if (asinList.length > AMAZON_MAX_ITEM_IDS) {
@@ -139,7 +134,16 @@ const similarityLookup = (
             'Amazon:ItemLookUp : Exceeded maximum number of ItemIds'
         );
     }
-    const itemAsinList = asinList.join(',');
+    return asinList.join(',');
+};
+
+const similarityLookup = (
+    asin,
+    similarityType = 'Intersection',
+    responseGroup = 'Medium',
+    locale = 'UK'
+) => {
+    const itemAsinList = convertToCommaSeparatedList(asin);
 
     const operationHelper = createOperationHelper(locale);
 
@@ -215,14 +219,7 @@ function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
 }
 
 function itemLookup(asin, responseGroup = 'Medium') {
-    const asinList = Array.isArray(asin) ? asin : [asin];
-
-    if (asinList.length > AMAZON_MAX_ITEM_IDS) {
-        throw new Error(
-            'Amazon:ItemLookUp : Exceeded maximum number of ItemIds'
-        );
-    }
-    const itemAsinList = asinList.join(',');
+    const itemAsinList = convertToCommaSeparatedList(asin);
 
     const operationHelper = createOperationHelper();
 
