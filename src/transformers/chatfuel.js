@@ -44,7 +44,7 @@ const galleryElement = item => {
             {
                 type: 'web_url',
                 url,
-                title: 'Buy Present'
+                title: 'Buy'
             }
         ]
     };

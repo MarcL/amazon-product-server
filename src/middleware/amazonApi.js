@@ -1,15 +1,21 @@
 import * as api from '../services/amazon';
+import logger from '../logger';
+
+const apiSuccess = (data, apiType, response, next) => {
+    response.locals.apiType = apiType;
+    response.locals.apiResponse = data;
+    next();
+};
 
 const itemSearch = (request, response, next) => {
     const {keywords, index} = request.query;
 
     api
         .itemSearch(keywords, index)
-        .then(amazonResponse => {
-            response.locals.apiResponse = amazonResponse;
-            next();
-        })
-        .catch(error => console.error(error.message));
+        .then(amazonResponse =>
+            apiSuccess(amazonResponse, 'ItemSearch', response, next)
+        )
+        .catch(error => logger.error(error.message));
 };
 
 const browseNodeLookup = (request, response, next) => {
@@ -17,11 +23,10 @@ const browseNodeLookup = (request, response, next) => {
 
     api
         .browseNodeLookup(id)
-        .then(amazonResponse => {
-            response.locals.apiResponse = amazonResponse;
-            next();
-        })
-        .catch(error => console.error(error.message));
+        .then(amazonResponse =>
+            apiSuccess(amazonResponse, 'BrowseNodeLookup', response, next)
+        )
+        .catch(error => logger.error(error.message));
 };
 
 const itemLookup = (request, response, next) => {
@@ -29,11 +34,21 @@ const itemLookup = (request, response, next) => {
 
     api
         .itemLookup(asin)
-        .then(amazonResponse => {
-            response.locals.apiResponse = amazonResponse;
-            next();
-        })
-        .catch(error => console.error(error.message));
+        .then(amazonResponse =>
+            apiSuccess(amazonResponse, 'ItemLookup', response, next)
+        )
+        .catch(error => logger.error(error.message));
 };
 
-export {browseNodeLookup, itemLookup, itemSearch};
+const similarityLookup = (request, response, next) => {
+    const {asin} = request.query;
+
+    api
+        .similarityLookup(asin)
+        .then(amazonResponse =>
+            apiSuccess(amazonResponse, 'SimilarityLookup', response, next)
+        )
+        .catch(error => logger.error(error.message));
+};
+
+export {browseNodeLookup, itemLookup, itemSearch, similarityLookup};

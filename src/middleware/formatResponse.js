@@ -3,11 +3,11 @@ import {itemsFromAmazonResponse} from '../parsers/amazon';
 
 const formatResponse = (request, response) => {
     const {format} = request.query;
-    const {apiResponse} = response.locals;
+    const {apiResponse, apiType} = response.locals;
 
     const data =
         format === 'facebook'
-            ? gallery(itemsFromAmazonResponse(apiResponse))
+            ? gallery(itemsFromAmazonResponse(apiResponse, apiType))
             : apiResponse;
 
     response.json(data);

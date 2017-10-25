@@ -24,9 +24,14 @@ const parseItem = item => {
     };
 };
 
-const itemsFromAmazonResponse = amazonResponse => {
-    const itemList = get(amazonResponse, 'ItemSearchResponse.Items.Item', []);
-    return itemList.map(item => parseItem(item));
+const isAvailable = item => item.OfferSummary.TotalNew !== '0';
+
+const itemsFromAmazonResponse = (
+    amazonResponse,
+    apiType = 'ItemSearchResponse'
+) => {
+    const itemList = get(amazonResponse, `${apiType}Response.Items.Item`, []);
+    return itemList.filter(isAvailable).map(item => parseItem(item));
 };
 
 export {itemsFromAmazonResponse, parseItem};

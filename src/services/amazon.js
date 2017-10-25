@@ -79,8 +79,6 @@ const validateSearchIndex = index => {
         indexName => indexName.toLowerCase() === index.toLowerCase()
     );
 
-    console.log(validIndex);
-
     return validIndex.length ? validIndex : 'All';
 };
 
@@ -127,6 +125,53 @@ function itemSearch(
             console.error(error);
         });
 }
+
+const similarityLookup = (
+    asin,
+    similarityType = 'Intersection',
+    responseGroup = 'Medium',
+    locale = 'UK'
+) => {
+    const asinList = Array.isArray(asin) ? asin : [asin];
+
+    if (asinList.length > AMAZON_MAX_ITEM_IDS) {
+        throw new Error(
+            'Amazon:ItemLookUp : Exceeded maximum number of ItemIds'
+        );
+    }
+    const itemAsinList = asinList.join(',');
+
+    const operationHelper = createOperationHelper(locale);
+
+    const cacheKeyName = createCacheKey([
+        'SimilaritySearch',
+        itemAsinList,
+        similarityType,
+        responseGroup,
+        locale
+    ]);
+
+    const cachedData = cache.get(cacheKeyName);
+    if (cachedData) {
+        logger.info(`Retrieving from cache : ${cacheKeyName}`);
+        return Promise.resolve(cachedData);
+    }
+
+    return operationHelper
+        .execute('SimilarityLookup', {
+            ItemId: itemAsinList,
+            SimilarityType: similarityType,
+            ResponseGroup: responseGroup
+        })
+        .then(response => {
+            logger.info(`Saving to cache : ${cacheKeyName}`);
+            cache.set(cacheKeyName, response.result);
+            return response.result;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+};
 
 // https://www.amazon.co.uk/gcx/Gifts-for-Women/gfhz/ref=s9_acss_bw_cg_CSMAINC_2b1_w?
 // ageGroup=adult-female&
@@ -192,4 +237,4 @@ function itemLookup(asin, responseGroup = 'Medium') {
         });
 }
 
-export {browseNodeLookup, itemLookup, itemSearch};
+export {browseNodeLookup, itemLookup, itemSearch, similarityLookup};

@@ -7,5 +7,6 @@ const router = express.Router();
 router.get('/itemlookup/:asin', amazonApi.itemLookup, formatResponse);
 router.get('/itemsearch/', amazonApi.itemSearch, formatResponse);
 router.get('/browsenodelookup/:id', amazonApi.browseNodeLookup, formatResponse);
+router.get('/similaritylookup', amazonApi.similarityLookup, formatResponse);
 
 export default router;
