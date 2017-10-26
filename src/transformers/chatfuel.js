@@ -35,7 +35,7 @@ const imageAndText = (url, content) => {
 };
 
 const galleryElement = item => {
-    const {title, url, imageUrl, features, price} = item;
+    const {title, url, imageUrl, features, price, asin} = item;
     return {
         title,
         image_url: imageUrl,
@@ -45,6 +45,12 @@ const galleryElement = item => {
                 type: 'web_url',
                 url,
                 title: 'Buy'
+            },
+            {
+                set_attributes: {similarAsin: asin},
+                type: 'show_block',
+                block_names: ['SimilarPresents'],
+                title: 'Similar gifts?'
             }
         ]
     };
