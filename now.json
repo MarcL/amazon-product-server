@@ -4,7 +4,7 @@
         "AMAZON_KEY_ID": "@amazon-key-id",
         "AMAZON_SECRET_KEY": "@amazon-secret-key",
         "AMAZON_ASSOCIATE_ID_UK": "@amazon-associate-id-uk",
-        "AMAZON_ASSOCIATE_ID_US": "@amazon-associate-id-uk",
+        "AMAZON_ASSOCIATE_ID_US": "@amazon-associate-id-us",
         "API_KEY": "@amazon-product-server-api-key"
     },
     "alias": "amazonapi"
