@@ -6,7 +6,7 @@ const formatResponse = (request, response) => {
     const {apiResponse, apiType} = response.locals;
 
     const data =
-        format === 'facebook'
+        format === 'chatfuel'
             ? gallery(itemsFromAmazonResponse(apiResponse, apiType))
             : apiResponse;
 
