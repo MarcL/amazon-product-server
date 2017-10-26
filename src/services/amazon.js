@@ -171,29 +171,6 @@ const similarityLookup = (
         });
 };
 
-// https://www.amazon.co.uk/gcx/Gifts-for-Women/gfhz/ref=s9_acss_bw_cg_CSMAINC_2b1_w?
-// ageGroup=adult-female&
-// interests=unique&
-// pf_rd_i=11180296031&
-// pf_rd_m=A3P5ROKL5A1OLE&
-// pf_rd_p=569&
-// pf_rd_r=QPC7231219NSRJV3TYB0&
-// pf_rd_s=merchandised-search-3&
-// pf_rd_t=101&
-// showBubbles=false
-
-// ageGroup
-// - adult-neutral
-// - adult-female
-// - adult-male
-// - teen-neutral
-// - kid8-neutral
-// - kid4-neutral
-// - baby-neutral
-// - pet-neutral
-
-// Christmas browsenode (UK) 11180296031
-
 const validateAmazonResponse = result => {
     return result;
 };
