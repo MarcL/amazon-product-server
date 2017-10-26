@@ -14,17 +14,26 @@ const apiFailure = (error, response) => {
     return response.json(notFound);
 };
 
+const DEFAULT_AMAZON_RESPONSE_GROUP = 'Medium';
+
 const itemSearch = (request, response, next) => {
     const {keywords, index} = request.query;
+    const {amazonLocale} = response.locals;
 
     api
-        .itemSearch(keywords, index)
+        .itemSearch(
+            keywords,
+            index,
+            DEFAULT_AMAZON_RESPONSE_GROUP,
+            amazonLocale
+        )
         .then(amazonResponse =>
             apiSuccess(amazonResponse, 'ItemSearch', response, next)
         )
         .catch(error => apiFailure(error, response));
 };
 
+// TODO : Fix up
 const browseNodeLookup = (request, response, next) => {
     const {id} = request.params;
 
@@ -36,6 +45,7 @@ const browseNodeLookup = (request, response, next) => {
         .catch(error => apiFailure(error, response));
 };
 
+// TODO : Fix up
 const itemLookup = (request, response, next) => {
     const {asin} = request.params;
 
@@ -49,9 +59,15 @@ const itemLookup = (request, response, next) => {
 
 const similarityLookup = (request, response, next) => {
     const {asin} = request.query;
+    const {amazonLocale} = response.locals;
 
     api
-        .similarityLookup(asin)
+        .similarityLookup(
+            asin,
+            'Intersection',
+            DEFAULT_AMAZON_RESPONSE_GROUP,
+            amazonLocale
+        )
         .then(amazonResponse =>
             apiSuccess(amazonResponse, 'SimilarityLookup', response, next)
         )
