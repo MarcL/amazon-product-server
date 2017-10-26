@@ -9,25 +9,30 @@ const getImageUrl = item => {
         return item.SmallImage.URL;
     }
 
-    return 'http://http://lorempixel.com/500/500/';
+    return 'http://lorempixel.com/500/500/';
 };
 
 const parseItem = item => {
     const {ItemAttributes: itemAttributes} = item;
+    const listPrice = get(
+        item,
+        'ItemAttributes.ListPrice.FormattedPrice',
+        'Unknown'
+    );
     return {
         asin: item.ASIN,
         url: item.DetailPageURL,
         imageUrl: getImageUrl(item),
         title: itemAttributes.Title,
-        price: itemAttributes.ListPrice.FormattedPrice,
+        price: listPrice,
         features: itemAttributes.Feature
     };
 };
 
 const isAvailable = item => {
     const listPrice = get(item, 'ItemAttributes.ListPrice.FormattedPrice');
-    const totalNew = get(item, 'OfferSummary.TotalNew');
-    return listPrice || totalNew;
+    const totalNew = get(item, 'OfferSummary.TotalNew', '0');
+    return listPrice || (totalNew && totalNew !== '0');
 };
 
 const itemsFromAmazonResponse = (
