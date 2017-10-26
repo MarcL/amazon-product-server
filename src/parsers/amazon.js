@@ -24,14 +24,19 @@ const parseItem = item => {
     };
 };
 
-const isAvailable = item => item.OfferSummary.TotalNew !== '0';
+const isAvailable = item => {
+    const listPrice = get(item, 'ItemAttributes.ListPrice.FormattedPrice');
+    const totalNew = get(item, 'OfferSummary.TotalNew');
+    return listPrice || totalNew;
+};
 
 const itemsFromAmazonResponse = (
     amazonResponse,
     apiType = 'ItemSearchResponse'
 ) => {
     const itemList = get(amazonResponse, `${apiType}Response.Items.Item`, []);
-    return itemList.filter(isAvailable).map(item => parseItem(item));
+    const finalItemList = Array.isArray(itemList) ? itemList : [itemList];
+    return finalItemList.filter(isAvailable).map(item => parseItem(item));
 };
 
 export {itemsFromAmazonResponse, parseItem};

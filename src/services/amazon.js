@@ -120,9 +120,6 @@ function itemSearch(
             logger.info(`Saving to cache : ${cacheKeyName}`);
             cache.set(cacheKeyName, response.result);
             return response.result;
-        })
-        .catch(error => {
-            console.error(error);
         });
 }
 
@@ -171,9 +168,6 @@ const similarityLookup = (
             logger.info(`Saving to cache : ${cacheKeyName}`);
             cache.set(cacheKeyName, response.result);
             return response.result;
-        })
-        .catch(error => {
-            console.error(error);
         });
 };
 
@@ -212,10 +206,7 @@ function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
             BrowseNodeId: browseNodeId,
             ResponseGroup: responseGroup
         })
-        .then(response => validateAmazonResponse(response.result))
-        .catch(error => {
-            console.error(error);
-        });
+        .then(response => validateAmazonResponse(response.result));
 }
 
 function itemLookup(asin, responseGroup = 'Medium') {
@@ -228,10 +219,7 @@ function itemLookup(asin, responseGroup = 'Medium') {
             ItemId: itemAsinList,
             ResponseGroup: responseGroup
         })
-        .then(response => response.result)
-        .catch(error => {
-            console.error(error);
-        });
+        .then(response => response.result);
 }
 
 export {browseNodeLookup, itemLookup, itemSearch, similarityLookup};
