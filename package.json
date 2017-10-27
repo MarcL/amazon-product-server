@@ -5,12 +5,14 @@
     "main": "./server.js",
     "scripts": {
         "server:expose": "lt -s amazonapi -p 3000",
-        "start": "node .",
+        "start": "NODE_ENV=production node .",
+        "start:dev": "NODE_ENV=dev node .",
         "test": "echo \"Error: no test specified\" && exit 1",
         "watch": "nodemon --watch server.js --watch src"
     },
     "keywords": [],
-    "author": "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
+    "author":
+        "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
     "license": "MIT",
     "dependencies": {
         "apac": "^3.0.2",
