@@ -13,7 +13,6 @@ const formatResponse = (request, response) => {
     const {apiResponse, apiType} = response.locals;
 
     const items = itemsFromAmazonResponse(apiResponse, apiType);
-    console.log(items);
     const data =
         items.length > 0
             ? validItemsJson(apiResponse, items, format)
