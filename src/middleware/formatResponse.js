@@ -4,7 +4,7 @@ import {notFound} from '../botResponses';
 
 const noItemsResponse = notFound();
 
-const validItemsJson = (apiResponse, items) => {
+const validItemsJson = (apiResponse, items, format) => {
     return format === 'chatfuel' ? gallery(items) : apiResponse;
 };
 
@@ -13,8 +13,11 @@ const formatResponse = (request, response) => {
     const {apiResponse, apiType} = response.locals;
 
     const items = itemsFromAmazonResponse(apiResponse, apiType);
+    console.log(items);
     const data =
-        items > 0 ? validItemsJson(apiResonse, items, format) : noItemsResponse;
+        items.length > 0
+            ? validItemsJson(apiResponse, items, format)
+            : noItemsResponse;
 
     response.json(data);
 };
