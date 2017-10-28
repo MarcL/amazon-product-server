@@ -42,7 +42,7 @@ function getPresentList(request, response) {
         })
         .catch(error => {
             logger.error('Error bot API', error);
-            response.json(notFound);
+            response.json(notFound());
         });
 }
 

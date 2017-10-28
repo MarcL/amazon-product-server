@@ -5,7 +5,7 @@ import {notFound} from '../botResponses';
 const defaultErrorHandler = (error, request, response, next) => {
     logger.error('Default error handler', {message: error.message});
 
-    response.status(500).json(notFound);
+    response.status(500).json(notFound());
 };
 
 export default defaultErrorHandler;

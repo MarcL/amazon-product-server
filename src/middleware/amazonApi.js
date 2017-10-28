@@ -11,7 +11,7 @@ const apiSuccess = (data, apiType, response, next) => {
 const apiFailure = (error, response) => {
     logger.error(error.message);
 
-    return response.json(notFound);
+    return response.json(notFound());
 };
 
 const DEFAULT_AMAZON_RESPONSE_GROUP = 'Medium';
