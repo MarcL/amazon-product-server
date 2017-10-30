@@ -1,7 +1,7 @@
-import {notFound as notFoundBotResponse} from '../botResponses';
+import {notFound} from '../botResponses';
 
 const notFoundHandler = (request, response) => {
-    response.status(404).json(notFoundBotResponse());
+    response.status(404).json(notFound());
 };
 
 export default notFoundHandler;

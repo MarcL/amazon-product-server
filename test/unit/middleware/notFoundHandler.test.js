@@ -1,13 +1,11 @@
-import defaultErrorHandler from '../../../src/middleware/defaultErrorHandler';
+import notFoundHandler from '../../../src/middleware/notFoundHandler';
 import {notFound} from '../../../src/botResponses';
 
-describe('defaultErrorHandler', () => {
+describe('notFoundHandler', () => {
     let fakeRequest;
     let fakeResponse;
     let stubResponseJson;
     let stubResponseStatus;
-
-    const defaultError = new Error('defaultError');
 
     beforeEach(() => {
         // TODO : Use fake http request when I've got wifi!
@@ -24,14 +22,14 @@ describe('defaultErrorHandler', () => {
             .returns(fakeResponse);
     });
 
-    it('should set a 500 HTTP status code', () => {
-        defaultErrorHandler(defaultError, fakeRequest, fakeResponse);
+    it('should set a 404 HTTP status code', () => {
+        notFoundHandler(fakeRequest, fakeResponse);
 
-        expect(stubResponseStatus).to.have.been.calledWithExactly(500);
+        expect(stubResponseStatus).to.have.been.calledWithExactly(404);
     });
 
     it('should return expected error JSON response', () => {
-        defaultErrorHandler(defaultError, fakeRequest, fakeResponse);
+        notFoundHandler(fakeRequest, fakeResponse);
 
         expect(stubResponseJson).to.have.been.calledWithExactly(notFound());
     });
