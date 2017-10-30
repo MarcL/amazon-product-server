@@ -3,13 +3,13 @@ import requestInformation from './middleware/requestInformation';
 import * as amazonApi from './middleware/amazonApi';
 import notFoundHandler from './middleware/notFoundHandler';
 import defaultErrorHandler from './middleware/defaultErrorHandler';
-import localeToAmazonLocale from './middleware/facebook';
+import determineAmazonLocale from './middleware/determineAmazonLocale';
 import amazonApiRoutes from './routes/amazonApi';
 
 function initialiseRoutes(app) {
     app.use(validateApiKey);
     app.use(requestInformation);
-    app.use(localeToAmazonLocale);
+    app.use(determineAmazonLocale);
 
     app.use('/', amazonApiRoutes);
 
