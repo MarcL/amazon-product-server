@@ -2,6 +2,9 @@ import {OperationHelper} from 'apac';
 import cache from '../cache';
 import logger from '../logger';
 
+// TODO : Should be called from outside this code
+import validateSearchIndex from '../validators/amazonSearchIndex';
+
 const AMAZON_MAX_ITEM_IDS = 10;
 
 const hasValidCredentials = () => {
@@ -35,56 +38,6 @@ const createOperationHelper = (locale = 'UK') => {
         locale,
         maxRequestsPerSecond: 1
     });
-};
-
-const validateSearchIndex = index => {
-    const validSearchIndexNames = [
-        'All',
-        'Apparel',
-        'Appliances',
-        'Automotive',
-        'Baby',
-        'Beauty',
-        'Blended',
-        'Books',
-        'Classical',
-        'DVD',
-        'Electronics',
-        'Grocery',
-        'HealthPersonalCare',
-        'HomeGarden',
-        'HomeImprovement',
-        'Jewelry',
-        'KindleStore',
-        'Kitchen',
-        'Lighting',
-        'Marketplace',
-        'MP3Downloads',
-        'Music',
-        'MusicTracks',
-        'MusicalInstruments',
-        'OfficeProducts',
-        'OutdoorLiving',
-        'Outlet',
-        'PetSupplies',
-        'PCHardware',
-        'Shoes',
-        'Software',
-        'SoftwareVideoGames',
-        'SportingGoods',
-        'Tools',
-        'Toys',
-        'VHS',
-        'Video',
-        'VideoGames',
-        'Watches'
-    ];
-
-    const validIndex = validSearchIndexNames.filter(
-        indexName => indexName.toLowerCase() === index.toLowerCase()
-    );
-
-    return validIndex.length ? validIndex : 'All';
 };
 
 const createCacheKey = dataList => {
