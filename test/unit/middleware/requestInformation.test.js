@@ -1,6 +1,6 @@
 import requestInformation from '../../../src/middleware/requestInformation';
 
-describe.only('requestInformation', () => {
+describe('requestInformation', () => {
     let fakeRequest;
     let fakeResponse;
     let spyNext;
