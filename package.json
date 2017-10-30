@@ -33,5 +33,9 @@
         "nodemon": "^1.12.1",
         "sinon": "^4.0.2",
         "sinon-chai": "^2.14.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:MarcL/amazon-product-server.git"
     }
 }
