@@ -4,7 +4,7 @@
     "description": "",
     "main": "./server.js",
     "scripts": {
-        "lint": "eslint {src,test}/**/*.js",
+        "lint": "eslint {src,test}/**/*.js server.js",
         "precommit": "yarn lint",
         "prepush": "yarn test",
         "server:expose": "lt -s amazonapi -p 3000",
