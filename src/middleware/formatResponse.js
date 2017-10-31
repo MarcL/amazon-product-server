@@ -4,9 +4,8 @@ import {notFound} from '../botResponses';
 
 const noItemsResponse = notFound();
 
-const validItemsJson = (apiResponse, items, format) => {
-    return format === 'chatfuel' ? gallery(items) : apiResponse;
-};
+const validItemsJson = (apiResponse, items, format) =>
+    format === 'chatfuel' ? gallery(items) : apiResponse;
 
 const formatResponse = (request, response) => {
     const {format} = request.query;

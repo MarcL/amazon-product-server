@@ -1,38 +1,30 @@
-const singleMessage = content => {
-    return {text: content};
-};
+const singleMessage = content => ({text: content});
 
-const text = message => {
+const textMessage = message => {
     const messageList = Array.isArray(message) ? message : [message];
-    const messages = messageList.map(text => singleMessage(content));
+    const messages = messageList.map(content => singleMessage(content));
 
     return {
         messages
     };
 };
 
-const imageAttachment = url => {
-    return {
-        attachment: {
-            type: 'image',
-            payload: {
-                url
-            }
+const imageAttachment = url => ({
+    attachment: {
+        type: 'image',
+        payload: {
+            url
         }
-    };
-};
+    }
+});
 
-const image = url => {
-    return {
-        messages: [imageAttachment(url)]
-    };
-};
+const image = url => ({
+    messages: [imageAttachment(url)]
+});
 
-const imageAndText = (url, content) => {
-    return {
-        messages: [imageAttachment(url), singleMessage(content)]
-    };
-};
+const imageAndText = (url, content) => ({
+    messages: [imageAttachment(url), singleMessage(content)]
+});
 
 const galleryElement = item => {
     const {title, url, imageUrl, features, price, asin} = item;
@@ -73,4 +65,4 @@ const gallery = simpleAmazonItemList => {
     };
 };
 
-export {text, gallery, image, imageAttachment, imageAndText};
+export {textMessage, gallery, image, imageAttachment, imageAndText};

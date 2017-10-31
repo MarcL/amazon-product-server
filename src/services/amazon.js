@@ -7,14 +7,11 @@ import validateSearchIndex from '../validators/amazonSearchIndex';
 
 const AMAZON_MAX_ITEM_IDS = 10;
 
-const hasValidCredentials = () => {
-    return (
-        process.env.AMAZON_KEY_ID &&
-        process.env.AMAZON_SECRET_KEY &&
-        process.env.AMAZON_ASSOCIATE_ID_UK &&
-        process.env.AMAZON_ASSOCIATE_ID_US
-    );
-};
+const hasValidCredentials = () =>
+    process.env.AMAZON_KEY_ID &&
+    process.env.AMAZON_SECRET_KEY &&
+    process.env.AMAZON_ASSOCIATE_ID_UK &&
+    process.env.AMAZON_ASSOCIATE_ID_US;
 
 const createOperationHelper = (locale = 'UK') => {
     if (!hasValidCredentials()) {
@@ -40,9 +37,7 @@ const createOperationHelper = (locale = 'UK') => {
     });
 };
 
-const createCacheKey = dataList => {
-    return dataList.join('|');
-};
+const createCacheKey = dataList => dataList.join('|');
 
 function itemSearch(
     keywords,
@@ -129,9 +124,7 @@ const similarityLookup = (
         });
 };
 
-const validateAmazonResponse = result => {
-    return result;
-};
+const validateAmazonResponse = result => result;
 
 function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
     const operationHelper = createOperationHelper();
