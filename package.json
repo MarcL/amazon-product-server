@@ -14,8 +14,7 @@
         "watch": "nodemon --watch server.js --watch src"
     },
     "keywords": [],
-    "author":
-        "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
+    "author": "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
     "license": "MIT",
     "dependencies": {
         "apac": "^3.0.2",
@@ -26,6 +25,9 @@
         "lodash.get": "^4.4.2",
         "morgan": "^1.9.0",
         "node-cache": "^4.1.1",
+        "query-string": "^5.0.1",
+        "request": "^2.83.0",
+        "request-promise": "^4.2.2",
         "winston": "^2.4.0"
     },
     "devDependencies": {

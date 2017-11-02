@@ -137,10 +137,10 @@ function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
         .then(response => validateAmazonResponse(response.result));
 }
 
-function itemLookup(asin, responseGroup = 'Medium') {
+function itemLookup(asin, responseGroup = 'Medium', locale = 'UK') {
     const itemAsinList = convertToCommaSeparatedList(asin);
 
-    const operationHelper = createOperationHelper();
+    const operationHelper = createOperationHelper(locale);
 
     return operationHelper
         .execute('ItemLookup', {
