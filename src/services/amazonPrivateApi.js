@@ -26,7 +26,7 @@ const itemFilter = (ageGroup, page, size, interests, locale = 'UK') => {
         ageGroup,
         page,
         size,
-        interests: urlInterests
+        interests: urlInterests || undefined
     });
 
     const amazonUrl = createAmazonFilterUrl(options, locale);
