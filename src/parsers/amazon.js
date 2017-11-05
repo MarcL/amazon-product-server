@@ -12,19 +12,27 @@ const getImageUrl = item => {
     return 'http://lorempixel.com/500/500/';
 };
 
+const getOfferPrice = item => {
+    const formattedPrice = get(item, 'ItemAttributes.ListPrice.FormattedPrice');
+
+    const offerSummaryNewPrice = get(
+        item,
+        'OfferSummary.LowestNewPrice.FormattedPrice'
+    );
+
+    return formattedPrice || offerSummaryNewPrice || 'Unknown';
+};
+
 const parseItem = item => {
     const {ItemAttributes: itemAttributes} = item;
-    const listPrice = get(
-        item,
-        'ItemAttributes.ListPrice.FormattedPrice',
-        'Unknown'
-    );
+    const price = getOfferPrice(item);
+
     return {
         asin: item.ASIN,
         url: item.DetailPageURL,
         imageUrl: getImageUrl(item),
         title: itemAttributes.Title,
-        price: listPrice,
+        price,
         features: itemAttributes.Feature
     };
 };
