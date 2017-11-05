@@ -140,6 +140,19 @@ function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
 function itemLookup(asin, responseGroup = 'Medium', locale = 'UK') {
     const itemAsinList = convertToCommaSeparatedList(asin);
 
+    const cacheKeyName = createCacheKey([
+        'ItemLookup',
+        itemAsinList,
+        responseGroup,
+        locale
+    ]);
+
+    const cachedData = cache.get(cacheKeyName);
+    if (cachedData) {
+        logger.info(`Retrieving from cache : ${cacheKeyName}`);
+        return Promise.resolve(cachedData);
+    }
+
     const operationHelper = createOperationHelper(locale);
 
     return operationHelper
@@ -147,7 +160,11 @@ function itemLookup(asin, responseGroup = 'Medium', locale = 'UK') {
             ItemId: itemAsinList,
             ResponseGroup: responseGroup
         })
-        .then(response => response.result);
+        .then(response => {
+            logger.info(`Saving to cache : ${cacheKeyName}`);
+            cache.set(cacheKeyName, response.result);
+            return response.result;
+        });
 }
 
 export {browseNodeLookup, itemLookup, itemSearch, similarityLookup};
