@@ -1,5 +1,5 @@
 import {OperationHelper} from 'apac';
-import cache from '../cache';
+import * as cache from '../cache';
 import logger from '../logger';
 
 // TODO : Should be called from outside this code
@@ -37,8 +37,6 @@ const createOperationHelper = (locale = 'UK') => {
     });
 };
 
-const createCacheKey = dataList => dataList.join('|');
-
 function itemSearch(
     keywords,
     index = 'All',
@@ -49,7 +47,7 @@ function itemSearch(
 
     const searchIndex = validateSearchIndex(index);
 
-    const cacheKeyName = createCacheKey([
+    const cacheKeyName = cache.key([
         'ItemSearch',
         keywords,
         searchIndex,
@@ -97,7 +95,7 @@ const similarityLookup = (
 
     const operationHelper = createOperationHelper(locale);
 
-    const cacheKeyName = createCacheKey([
+    const cacheKeyName = cache.key([
         'SimilaritySearch',
         itemAsinList,
         similarityType,
@@ -140,7 +138,7 @@ function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
 function itemLookup(asin, responseGroup = 'Medium', locale = 'UK') {
     const itemAsinList = convertToCommaSeparatedList(asin);
 
-    const cacheKeyName = createCacheKey([
+    const cacheKeyName = cache.key([
         'ItemLookup',
         itemAsinList,
         responseGroup,
