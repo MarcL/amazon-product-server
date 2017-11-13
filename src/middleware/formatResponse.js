@@ -1,6 +1,6 @@
 import {gallery} from '../transformers/chatfuel';
 import {itemsFromAmazonResponse} from '../parsers/amazon';
-import {notFound} from '../botResponses';
+import notFound from '../botResponses';
 
 const noItemsResponse = notFound();
 

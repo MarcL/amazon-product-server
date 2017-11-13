@@ -25,4 +25,4 @@ function start(port = process.env.PORT || 3000) {
     });
 }
 
-export {start};
+export default start;

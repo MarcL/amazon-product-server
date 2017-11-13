@@ -1,5 +1,5 @@
 import logger from '../../logger';
-import {notFound} from '../../botResponses';
+import notFound from '../../botResponses';
 
 const apiFailure = (error, response) => {
     logger.error(error.message);

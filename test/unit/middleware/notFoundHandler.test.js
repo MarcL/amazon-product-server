@@ -1,5 +1,5 @@
 import notFoundHandler from '../../../src/middleware/notFoundHandler';
-import {notFound} from '../../../src/botResponses';
+import notFound from '../../../src/botResponses';
 
 describe('notFoundHandler', () => {
     let fakeRequest;

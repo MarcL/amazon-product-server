@@ -2,7 +2,7 @@ import {
     apiFailure,
     apiSuccess
 } from '../../../../src/middleware/amazon/responses';
-import {notFound} from '../../../../src/botResponses';
+import notFound from '../../../../src/botResponses';
 
 describe('Amazon responses', () => {
     let fakeResponse;
@@ -58,6 +58,7 @@ describe('Amazon responses', () => {
                 spyNext
             );
 
+            // eslint-disable-next-line no-unused-expressions
             expect(spyNext).to.have.been.calledOnce;
         });
     });

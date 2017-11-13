@@ -48,6 +48,7 @@ describe('validateApiKey', () => {
         it('should not call next middleware', () => {
             validateApiKey(fakeRequest, fakeResponse, spyNext);
 
+            // eslint-disable-next-line no-unused-expressions
             expect(spyNext).to.not.have.been.called;
         });
 

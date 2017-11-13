@@ -1,5 +1,5 @@
 import logger from '../logger';
-import {notFound} from '../botResponses';
+import notFound from '../botResponses';
 
 // eslint-disable-next-line no-unused-vars
 const defaultErrorHandler = (error, request, response, next) => {

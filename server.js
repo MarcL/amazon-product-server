@@ -1,4 +1,4 @@
 require('dotenv').config();
 require('babel-register');
 
-require('./src/launch').start();
+require('./src/launch').default();

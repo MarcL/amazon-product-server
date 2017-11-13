@@ -2,7 +2,7 @@ import itemFilter from '../../../../src/middleware/amazon/itemFilter';
 import * as amazonItemFilter from '../../../../src/services/amazonPrivateApi';
 import * as amazonApi from '../../../../src/services/amazon';
 
-describe.only('Amazon itemFilter', () => {
+describe('Amazon itemFilter', () => {
     let fakeRequest;
     let fakeResponse;
     let spyNext;

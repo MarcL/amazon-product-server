@@ -1,6 +1,6 @@
 import * as api from '../services/amazon';
 import logger from '../logger';
-import {notFound} from '../botResponses';
+import notFound from '../botResponses';
 
 const apiSuccess = (data, apiType, response, next) => {
     response.locals.apiType = apiType;

@@ -1,6 +1,5 @@
 import validateApiKey from './middleware/validateApiKey';
 import requestInformation from './middleware/requestInformation';
-import * as amazonApi from './middleware/amazonApi';
 import notFoundHandler from './middleware/notFoundHandler';
 import defaultErrorHandler from './middleware/defaultErrorHandler';
 import determineAmazonLocale from './middleware/determineAmazonLocale';

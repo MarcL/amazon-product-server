@@ -1,5 +1,5 @@
 import defaultErrorHandler from '../../../src/middleware/defaultErrorHandler';
-import {notFound} from '../../../src/botResponses';
+import notFound from '../../../src/botResponses';
 
 describe('defaultErrorHandler', () => {
     let fakeRequest;
