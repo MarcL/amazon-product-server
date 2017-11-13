@@ -1,5 +1,4 @@
 import * as api from '../services/amazon';
-import amazonItemFilter from '../services/amazonPrivateApi';
 import logger from '../logger';
 import {notFound} from '../botResponses';
 
@@ -75,24 +74,4 @@ const similarityLookup = (request, response, next) => {
         .catch(error => apiFailure(error, response));
 };
 
-const itemFilter = (request, response, next) => {
-    const {
-        agegroup = 'adult-male',
-        page = 0,
-        size = 10,
-        interests
-    } = request.query;
-    const {amazonLocale} = response.locals;
-
-    amazonItemFilter(agegroup, page, size, interests, amazonLocale)
-        .then(apiResponse => apiResponse.asins.map(asin => asin.asin))
-        .then(asins =>
-            api.itemLookup(asins, DEFAULT_AMAZON_RESPONSE_GROUP, amazonLocale)
-        )
-        .then(amazonResponse =>
-            apiSuccess(amazonResponse, 'ItemLookup', response, next)
-        )
-        .catch(error => apiFailure(error, response));
-};
-
-export {browseNodeLookup, itemLookup, itemSearch, similarityLookup, itemFilter};
+export {browseNodeLookup, itemLookup, itemSearch, similarityLookup};

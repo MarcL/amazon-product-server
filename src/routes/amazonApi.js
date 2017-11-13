@@ -1,5 +1,6 @@
 import express from 'express';
 import * as amazonApi from '../middleware/amazonApi';
+import amazonItemFilter from '../middleware/amazon/itemFilter';
 import formatResponse from '../middleware/formatResponse';
 
 const router = express.Router();
@@ -11,6 +12,6 @@ router.get('/similaritylookup', amazonApi.similarityLookup, formatResponse);
 router.get('/itemlookup/:asin', amazonApi.itemLookup, formatResponse);
 router.get('/browsenodelookup/:id', amazonApi.browseNodeLookup, formatResponse);
 
-router.get('/itemfilter', amazonApi.itemFilter, formatResponse);
+router.get('/itemfilter', amazonItemFilter, formatResponse);
 
 export default router;
