@@ -4,7 +4,7 @@ import {
 } from '../../../../src/middleware/amazon/responses';
 import {notFound} from '../../../../src/botResponses';
 
-describe.only('Amazon responses', () => {
+describe('Amazon responses', () => {
     let fakeResponse;
     let stubResponseJson;
 
