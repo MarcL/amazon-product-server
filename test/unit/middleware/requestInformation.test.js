@@ -1,3 +1,4 @@
+import httpMocks from 'node-mocks-http';
 import requestInformation from '../../../src/middleware/requestInformation';
 
 describe('requestInformation', () => {
@@ -9,12 +10,13 @@ describe('requestInformation', () => {
     const defaultHostname = 'defaulthostname.com';
 
     beforeEach(() => {
-        // TODO : Use fake http request when I've got wifi!
-        fakeRequest = {
-            query: {},
-            protocol: defaultProtocol,
-            hostname: defaultHostname
-        };
+        fakeRequest = httpMocks.createRequest();
+        fakeRequest.protocol = defaultProtocol;
+        fakeRequest.hostname = defaultHostname;
+
+        fakeResponse = httpMocks.createResponse();
+        fakeResponse.locals = {};
+
         fakeResponse = {locals: {}};
         spyNext = sinon.spy();
     });

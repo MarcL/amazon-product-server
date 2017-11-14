@@ -1,3 +1,4 @@
+import httpMocks from 'node-mocks-http';
 import itemFilter from '../../../../src/middleware/amazon/itemFilter';
 import * as amazonItemFilter from '../../../../src/services/amazonPrivateApi';
 import * as amazonApi from '../../../../src/services/amazon';
@@ -14,13 +15,9 @@ describe('Amazon itemFilter', () => {
     };
 
     beforeEach(() => {
-        // TODO : Use fake http request when I've got wifi!
-        fakeRequest = {query: {}};
-        fakeResponse = {
-            json: () => {},
-            locals: {},
-            status: () => {}
-        };
+        fakeRequest = httpMocks.createRequest();
+        fakeResponse = httpMocks.createResponse();
+        fakeResponse.locals = {};
 
         spyNext = sinon.spy();
         stubAmazonItemFilter = sinon

@@ -14,8 +14,7 @@
         "watch": "nodemon --watch server.js --watch src"
     },
     "keywords": [],
-    "author":
-        "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
+    "author": "Marc Littlemore <marc.littlemore@gmail.com> (http://www.marclittlemore.com)",
     "license": "MIT",
     "dependencies": {
         "apac": "^3.0.2",
@@ -42,6 +41,7 @@
         "husky": "^0.14.3",
         "localtunnel": "^1.8.3",
         "mocha": "^4.0.1",
+        "node-mocks-http": "^1.6.6",
         "nodemon": "^1.12.1",
         "sinon": "^4.0.2",
         "sinon-chai": "^2.14.0"
