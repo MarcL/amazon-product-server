@@ -1,3 +1,4 @@
+import httpMocks from 'node-mocks-http';
 import {
     apiFailure,
     apiSuccess
@@ -9,12 +10,8 @@ describe('Amazon responses', () => {
     let stubResponseJson;
 
     beforeEach(() => {
-        // TODO : Use fake http response when I've got wifi!
-        fakeResponse = {
-            json: () => {},
-            locals: {},
-            status: () => {}
-        };
+        fakeResponse = httpMocks.createResponse();
+        fakeResponse.locals = {};
 
         stubResponseJson = sinon.stub(fakeResponse, 'json');
     });

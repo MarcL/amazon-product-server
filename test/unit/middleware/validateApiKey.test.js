@@ -1,3 +1,4 @@
+import httpMocks from 'node-mocks-http';
 import validateApiKey from '../../../src/middleware/validateApiKey';
 
 describe('validateApiKey', () => {
@@ -9,13 +10,9 @@ describe('validateApiKey', () => {
     let originalApiKey;
 
     beforeEach(() => {
-        // TODO : Use fake http request when I've got wifi!
-        fakeRequest = {query: {}};
-        fakeResponse = {
-            json: () => {},
-            locals: {},
-            status: () => {}
-        };
+        fakeRequest = httpMocks.createRequest();
+        fakeResponse = httpMocks.createResponse();
+        fakeResponse.locals = {};
 
         stubResponseJson = sinon.stub(fakeResponse, 'json');
         stubResponseStatus = sinon

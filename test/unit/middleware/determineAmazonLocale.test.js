@@ -1,3 +1,4 @@
+import httpMocks from 'node-mocks-http';
 import determineAmazonLocale from '../../../src/middleware/determineAmazonLocale';
 
 describe('determineAmazonLocale', () => {
@@ -6,9 +7,9 @@ describe('determineAmazonLocale', () => {
     let spyNext;
 
     beforeEach(() => {
-        // TODO : Use fake http request when I've got wifi!
-        fakeRequest = {query: {}};
-        fakeResponse = {locals: {}};
+        fakeRequest = httpMocks.createRequest();
+        fakeResponse = httpMocks.createResponse();
+        fakeResponse.locals = {};
         spyNext = sinon.spy();
     });
 

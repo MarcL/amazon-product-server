@@ -1,3 +1,4 @@
+import httpMocks from 'node-mocks-http';
 import notFoundHandler from '../../../src/middleware/notFoundHandler';
 import notFound from '../../../src/botResponses';
 
@@ -8,13 +9,9 @@ describe('notFoundHandler', () => {
     let stubResponseStatus;
 
     beforeEach(() => {
-        // TODO : Use fake http request when I've got wifi!
-        fakeRequest = {query: {}};
-        fakeResponse = {
-            json: () => {},
-            locals: {},
-            status: () => {}
-        };
+        fakeRequest = httpMocks.createRequest();
+        fakeResponse = httpMocks.createResponse();
+        fakeResponse.locals = {};
 
         stubResponseJson = sinon.stub(fakeResponse, 'json');
         stubResponseStatus = sinon
