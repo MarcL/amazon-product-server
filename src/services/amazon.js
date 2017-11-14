@@ -136,8 +136,9 @@ function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
 }
 
 function itemLookup(asin, responseGroup = 'Medium', locale = 'UK') {
+    console.log(asin);
     const itemAsinList = convertToCommaSeparatedList(asin);
-
+    console.log(itemAsinList);
     const cacheKeyName = cache.key([
         'ItemLookup',
         itemAsinList,
@@ -161,6 +162,7 @@ function itemLookup(asin, responseGroup = 'Medium', locale = 'UK') {
         .then(response => {
             logger.info(`Saving to cache : ${cacheKeyName}`);
             cache.set(cacheKeyName, response.result);
+
             return response.result;
         });
 }
