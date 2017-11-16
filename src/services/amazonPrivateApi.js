@@ -1,6 +1,7 @@
 import querystring from 'query-string';
 import requestPromise from 'request-promise';
 import logger from '../logger';
+import * as cache from '../cache';
 
 const createAmazonFilterUrl = (options, locale) => {
     const baseUrl =
@@ -20,6 +21,21 @@ const itemFilter = (ageGroup, page, size, interests, locale = 'UK') => {
         page: 0,
         size: 10
     };
+
+    const cacheKeyName = cache.key([
+        'ItemFilter',
+        ageGroup,
+        page,
+        size,
+        interests,
+        locale
+    ]);
+
+    const cachedData = cache.get(cacheKeyName);
+    if (cachedData) {
+        logger.info(`Retrieving from cache : ${cacheKeyName}`);
+        return Promise.resolve(cachedData);
+    }
 
     const urlInterests = interests ? interests.split(' ').join(',') : interests;
     const options = Object.assign({}, defaultFilterOptions, {
@@ -43,7 +59,11 @@ const itemFilter = (ageGroup, page, size, interests, locale = 'UK') => {
 
     return requestPromise
         .get(requestOptions)
-        .then(response => response)
+        .then(response => {
+            logger.info(`Saving to cache : ${cacheKeyName}`);
+            cache.set(cacheKeyName, response);
+            return response;
+        })
         .catch(error => {
             logger.error(error);
         });
