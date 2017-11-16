@@ -136,9 +136,7 @@ function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
 }
 
 function itemLookup(asin, responseGroup = 'Medium', locale = 'UK') {
-    console.log(asin);
     const itemAsinList = convertToCommaSeparatedList(asin);
-    console.log(itemAsinList);
     const cacheKeyName = cache.key([
         'ItemLookup',
         itemAsinList,
