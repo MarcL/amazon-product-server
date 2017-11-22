@@ -36,7 +36,7 @@ const galleryElement = item => {
             {
                 type: 'web_url',
                 url,
-                title: 'Buy'
+                title: 'View gift'
             },
             {
                 set_attributes: {similarAsin: asin},
