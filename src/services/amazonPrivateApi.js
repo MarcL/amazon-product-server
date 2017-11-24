@@ -56,8 +56,6 @@ const itemFilter = (ageGroup, page, size, interests, localeData) => {
         }
     };
 
-    console.log(requestOptions.uri);
-
     return requestPromise
         .get(requestOptions)
         .then(response => {
