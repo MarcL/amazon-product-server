@@ -3,6 +3,7 @@ import amazonItemFilter from '../../services/amazonPrivateApi';
 import {apiSuccess} from './responses';
 import {textMessage} from '../../transformers/chatfuel';
 import logger from '../../logger';
+import getLocaleData from '../../validLocales';
 
 const itemFilter = (request, response, next) => {
     const {
@@ -11,9 +12,10 @@ const itemFilter = (request, response, next) => {
         size = 10,
         interests
     } = request.query;
-    const {amazonLocale} = response.locals;
+    const {countryCode = 'us'} = request.query;
 
-    return amazonItemFilter(agegroup, page, size, interests, amazonLocale)
+    const localeData = getLocaleData(countryCode);
+    return amazonItemFilter(agegroup, page, size, interests, localeData)
         .then(apiResponse => {
             const asinList = apiResponse.asins.map(asin => asin.asin);
             if (asinList.length === 0) {
@@ -22,7 +24,7 @@ const itemFilter = (request, response, next) => {
 
             return asinList;
         })
-        .then(asins => itemLookup(asins, 'Medium', amazonLocale))
+        .then(asins => itemLookup(asins, 'Medium', localeData.amazonLocale))
         .then(amazonResponse =>
             apiSuccess(amazonResponse, 'ItemLookup', response, next)
         )

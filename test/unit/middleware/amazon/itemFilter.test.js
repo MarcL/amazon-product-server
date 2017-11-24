@@ -4,6 +4,7 @@ import * as amazonItemFilter from '../../../../src/services/amazonPrivateApi';
 import * as amazonApi from '../../../../src/services/amazon';
 import * as apiResponses from '../../../../src/middleware/amazon/responses';
 import {textMessage} from '../../../../src/transformers/chatfuel';
+import getLocaleData from '../../../../src/validLocales';
 
 describe('Amazon itemFilter', () => {
     let fakeRequest;
@@ -105,13 +106,16 @@ describe('Amazon itemFilter', () => {
         );
     });
 
-    it('should be called with response locale', () => {
-        const givenLocale = 'givenLocale';
-        fakeResponse.locals.amazonLocale = givenLocale;
+    it('should be called with expected locale data', () => {
+        const givenCountryCode = 'uk';
+        const expectedLocaleData = getLocaleData(givenCountryCode);
+        fakeRequest.query.countryCode = givenCountryCode;
 
         itemFilter(fakeRequest, fakeResponse, spyNext);
 
-        expect(stubAmazonItemFilter.getCall(0).args[4]).to.equal(givenLocale);
+        expect(stubAmazonItemFilter.getCall(0).args[4]).to.deep.equal(
+            expectedLocaleData
+        );
     });
 
     const createAsinItem = (asin, title) => ({
@@ -119,21 +123,13 @@ describe('Amazon itemFilter', () => {
         title,
         detailPageURI: 'defaultDetailPageURI'
     });
-    // Item
-    // { simsPopoverURI: null,
-    //     detailPageURI: 'https://www.amazon.co.uk/dp/B01N9BXYW3/ref=cm_gf_ss_d_d_p_aAF_i9_p0_qd0',
-    //     mobileSimsPageURI: null,
-    //     isHearted: false,
-    //     interests: [Object],
-    //     dataSources: [],
-    //     asin: 'B01N9BXYW3',
-    //     price: '£19.99',
-    //     title: 'PuttOut Pressure Putt Trainer - Perfect Your Golf Putting',
-    //     pricePerUnit: null,
-    //     isEligibleForPrimeShipping: true,
-    //     displayLargeImageURL: 'https://images-na.ssl-images-amazon.com/images/I/81AqJkaT1RL.jpg' },
+
     describe('when itemFilter call succeeds', () => {
         it('should call itemLookup with expected parameters', () => {
+            const givenCountryCode = 'uk';
+            const expectedLocaleData = getLocaleData(givenCountryCode);
+            fakeRequest.query.countryCode = givenCountryCode;
+
             const givenAsin1 = 'givenAsin1';
             const givenAsin2 = 'givenAsin2';
             const givenProduct1 = createAsinItem(givenAsin1, 'defaultTitle');
@@ -149,7 +145,7 @@ describe('Amazon itemFilter', () => {
                 expect(stubAmazonItemLookup).to.have.been.calledWithExactly(
                     [givenAsin1, givenAsin2],
                     'Medium',
-                    defaultAmazonLocale
+                    expectedLocaleData.amazonLocale
                 );
             });
         });
