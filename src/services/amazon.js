@@ -1,6 +1,7 @@
 import {OperationHelper} from 'apac';
 import * as cache from '../cache';
 import logger from '../logger';
+import itemLookup from './amazon/itemLookup';
 
 // TODO : Should be called from outside this code
 import validateSearchIndex from '../validators/amazonSearchIndex';
@@ -133,36 +134,6 @@ function browseNodeLookup(browseNodeId, responseGroup = 'TopSellers') {
             ResponseGroup: responseGroup
         })
         .then(response => validateAmazonResponse(response.result));
-}
-
-function itemLookup(asin, responseGroup = 'Medium', locale = 'UK') {
-    const itemAsinList = convertToCommaSeparatedList(asin);
-    const cacheKeyName = cache.key([
-        'ItemLookup',
-        itemAsinList,
-        responseGroup,
-        locale
-    ]);
-
-    const cachedData = cache.get(cacheKeyName);
-    if (cachedData) {
-        logger.info(`Retrieving from cache : ${cacheKeyName}`);
-        return Promise.resolve(cachedData);
-    }
-
-    const operationHelper = createOperationHelper(locale);
-
-    return operationHelper
-        .execute('ItemLookup', {
-            ItemId: itemAsinList,
-            ResponseGroup: responseGroup
-        })
-        .then(response => {
-            logger.info(`Saving to cache : ${cacheKeyName}`);
-            cache.set(cacheKeyName, response.result);
-
-            return response.result;
-        });
 }
 
 export {browseNodeLookup, itemLookup, itemSearch, similarityLookup};
