@@ -22,7 +22,9 @@ describe('itemLookup', () => {
         const defaultAsin = 'defaultAsin';
         const defaultResponseGroup = 'defaultResponseGroup';
         const defaultAmazonLocale = 'defaultAmazonLocale';
-        const defaultCacheKey = `ItemLookup|${defaultAsin}|${defaultResponseGroup}|${defaultAmazonLocale}`;
+        const defaultCacheKey = `ItemLookup|${defaultAsin}|${
+            defaultResponseGroup
+        }|${defaultAmazonLocale}`;
         const defaultCachedData = {
             ItemLookUpResponse: {}
         };
@@ -45,7 +47,9 @@ describe('itemLookup', () => {
             const givenAsin1 = 'givenAsin1';
             const givenAsin2 = 'givenAsin2';
             const givenAsinList = [givenAsin1, givenAsin2];
-            const expectedCacheKey = `ItemLookup|${givenAsin1},${givenAsin2}|${defaultResponseGroup}|${defaultAmazonLocale}`;
+            const expectedCacheKey = `ItemLookup|${givenAsin1},${givenAsin2}|${
+                defaultResponseGroup
+            }|${defaultAmazonLocale}`;
             return itemLookup(
                 givenAsinList,
                 defaultResponseGroup,
@@ -59,7 +63,7 @@ describe('itemLookup', () => {
 
         // TODO : Need proxyquire for OperationHelper but on the train
         it('should not call operation helper');
-        it('should resolve cached data', () =>
+        it('should resolve with cached data', () =>
             itemLookup(defaultAsin).then(response => {
                 expect(response).to.equal(defaultCachedData);
             }));

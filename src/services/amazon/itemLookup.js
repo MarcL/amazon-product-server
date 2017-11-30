@@ -1,6 +1,7 @@
 import {OperationHelper} from 'apac';
 import * as cache from '../../cache';
 import logger from '../../logger';
+import asinArrayToCommaSeparatedList from '../asinList';
 
 const hasValidCredentials = () =>
     process.env.AMAZON_KEY_ID &&
@@ -32,24 +33,11 @@ const createOperationHelper = (locale = 'UK') => {
     });
 };
 
-const AMAZON_MAX_ITEM_IDS = 10;
-
-const convertToCommaSeparatedList = asin => {
-    const asinList = Array.isArray(asin) ? asin : [asin];
-
-    if (asinList.length > AMAZON_MAX_ITEM_IDS) {
-        throw new Error(
-            'Amazon:ItemLookUp : Exceeded maximum number of ItemIds'
-        );
-    }
-    return asinList.join(',');
-};
-
 function itemLookup(asin, responseGroup = 'Medium', locale = 'UK') {
     if (!asin) {
         throw new Error('Expected an ASIN or ASIN list');
     }
-    const itemAsinList = convertToCommaSeparatedList(asin);
+    const itemAsinList = asinArrayToCommaSeparatedList(asin);
     const cacheKeyName = cache.key([
         'ItemLookup',
         itemAsinList,
