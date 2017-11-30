@@ -4,10 +4,14 @@ import * as operationHelper from '../../../../src/services/operationHelper';
 
 describe('itemLookup', () => {
     let stubCacheGet;
+    let stubCacheSet;
     let stubOperationHelper;
     let stubOperationHelperExecute;
     const fakeAmazonResponse = {
-        result: {}
+        ItemLookUpResponse: {}
+    };
+    const fakeOperationHelperResponse = {
+        result: fakeAmazonResponse
     };
     let fakeOperationHelper;
 
@@ -19,12 +23,15 @@ describe('itemLookup', () => {
     }|${defaultAmazonLocale}`;
 
     beforeEach(() => {
-        stubOperationHelperExecute = sinon.stub().resolves(fakeAmazonResponse);
+        stubOperationHelperExecute = sinon
+            .stub()
+            .resolves(fakeOperationHelperResponse);
         fakeOperationHelper = {
             execute: stubOperationHelperExecute
         };
 
         stubCacheGet = sinon.stub(cache, 'get').returns();
+        stubCacheSet = sinon.stub(cache, 'set');
         stubOperationHelper = sinon
             .stub(operationHelper, 'default')
             .returns(fakeOperationHelper);
@@ -32,6 +39,7 @@ describe('itemLookup', () => {
 
     afterEach(() => {
         stubCacheGet.restore();
+        stubCacheSet.restore();
         stubOperationHelper.restore();
     });
 
@@ -112,11 +120,70 @@ describe('itemLookup', () => {
                 );
             }));
 
-        xit('should call operation helper with expected asin');
-        it('should call operation helper with expected asin list');
-        it('should call operation helper with expected response group');
-        it('should call operation helper with expected locale');
-        it('should cache expected operation helper data');
-        it('should resolve with expected operation helper data');
+        it('should call operation helper with expected asin', () => {
+            const expectedOptions = {
+                ItemId: defaultAsin,
+                ResponseGroup: defaultResponseGroup
+            };
+            return itemLookup(defaultAsin, defaultResponseGroup).then(() => {
+                expect(stubOperationHelperExecute).to.have.been.calledWith(
+                    'ItemLookup',
+                    expectedOptions
+                );
+            });
+        });
+
+        it('should call operation helper with expected asin list', () => {
+            const givenAsinList = ['asin1', 'asin2', 'asin3'];
+            const expectedOptions = {
+                ItemId: givenAsinList.join(','),
+                ResponseGroup: defaultResponseGroup
+            };
+            return itemLookup(givenAsinList, defaultResponseGroup).then(() => {
+                expect(stubOperationHelperExecute).to.have.been.calledWith(
+                    'ItemLookup',
+                    expectedOptions
+                );
+            });
+        });
+
+        it('should call operation helper with expected response group', () => {
+            const givenResponseGroup = 'givenResponseGroup';
+            const expectedOptions = {
+                ItemId: defaultAsin,
+                ResponseGroup: givenResponseGroup
+            };
+
+            return itemLookup(defaultAsin, givenResponseGroup).then(() => {
+                expect(stubOperationHelperExecute).to.have.been.calledWith(
+                    'ItemLookup',
+                    expectedOptions
+                );
+            });
+        });
+
+        it('should cache expected operation helper data', () => {
+            const expectedCacheKey = cache.key([
+                'ItemLookup',
+                defaultAsin,
+                defaultResponseGroup,
+                defaultAmazonLocale
+            ]);
+            return itemLookup(
+                defaultAsin,
+                defaultResponseGroup,
+                defaultAmazonLocale
+            ).then(() => {
+                expect(stubCacheSet).to.have.been.calledWith(
+                    expectedCacheKey,
+                    fakeAmazonResponse
+                );
+            });
+        });
+
+        it('should resolve with expected operation helper data', () =>
+            itemLookup(defaultAsin).then(response => {
+                expect(response).to.deep.equal(fakeAmazonResponse);
+            }));
     });
 });
