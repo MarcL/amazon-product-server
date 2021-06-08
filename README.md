@@ -44,7 +44,7 @@ AMAZON_ASSOCIATE_ID_US=<amazon-uk-affiliate-id>
 API_KEY=<your-own-api-key>
 ```
 
-Note that this file ahould never be checked into your repository. The `.gitignore` will ignore it but be aware that you don't accidentally allow it to be added.
+Note that this file should never be checked into your repository. The `.gitignore` will ignore it but be aware that you don't accidentally allow it to be added.
 
 If you're planning on deploying publically then you'll need to define these environment variables before starting the server.
 

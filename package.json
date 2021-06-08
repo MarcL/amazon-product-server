@@ -25,6 +25,7 @@
         "lodash.get": "^4.4.2",
         "morgan": "^1.9.0",
         "node-cache": "^4.1.1",
+        "proxyquire": "^1.8.0",
         "query-string": "^5.0.1",
         "request": "^2.83.0",
         "request-promise": "^4.2.2",
