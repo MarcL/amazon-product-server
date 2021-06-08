@@ -3,9 +3,8 @@ import requestPromise from 'request-promise';
 import logger from '../logger';
 import * as cache from '../cache';
 
-const createAmazonFilterUrl = (options, locale) => {
-    const baseUrl =
-        locale === 'UK' ? 'https://www.amazon.co.uk' : 'https://www.amazon.com';
+const createAmazonFilterUrl = (options, localeData) => {
+    const baseUrl = `https://www.amazon.${localeData.domain}`;
     const filterUrl = `${baseUrl}/gcx/-/gfhz/api/filter`;
 
     const requestQueryString = querystring.stringify(options);
@@ -14,7 +13,7 @@ const createAmazonFilterUrl = (options, locale) => {
 };
 
 // Client-side API calls this - hackety hack
-const itemFilter = (ageGroup, page, size, interests, locale = 'UK') => {
+const itemFilter = (ageGroup, page, size, interests, localeData) => {
     const defaultFilterOptions = {
         isPrime: false,
         ageGroup: 'adult-male',
@@ -28,7 +27,7 @@ const itemFilter = (ageGroup, page, size, interests, locale = 'UK') => {
         page,
         size,
         interests,
-        locale
+        localeData.domain
     ]);
 
     const cachedData = cache.get(cacheKeyName);
@@ -45,7 +44,7 @@ const itemFilter = (ageGroup, page, size, interests, locale = 'UK') => {
         interests: urlInterests || undefined
     });
 
-    const amazonUrl = createAmazonFilterUrl(options, locale);
+    const amazonUrl = createAmazonFilterUrl(options, localeData);
 
     const requestOptions = {
         uri: amazonUrl,
